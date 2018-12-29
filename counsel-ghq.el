@@ -5,8 +5,8 @@
 ;; Author: Keisuke Noguchi <windymelt@3qe.us>
 ;; URL: https://github.com/windymelt/counsel-ghq
 ;; Keywords: lisp counsel ghq
-;; Version: 0.0.1
-;; Package-Requires: ((emacs "24") (ivy "0.9.1"))
+;; Version: 0.0.2
+;; Package-Requires: ((emacs "24") (ivy "0.9.1") (counsel "0.9.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 ;;; Code:
 
 (require 'ivy)
+(require 'counsel)
 
 (defgroup counsel-ghq nil
   "ghq with counsel interface"
@@ -132,7 +133,8 @@
   (let ((name (file-name-nondirectory (directory-file-name repo))))
     (ivy-read (concat name ": ")
               (counsel-ghq--ls-files)
-              :action (lambda (path) (find-file path)))))
+              :action #'counsel-git-action
+              :caller 'counsel-git)))
 
 ;;;###autoload
 (defun counsel-ghq ()
