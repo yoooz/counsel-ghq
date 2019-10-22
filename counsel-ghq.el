@@ -29,6 +29,7 @@
 
 (require 'ivy)
 (require 'counsel)
+(require 'magit)
 
 (defgroup counsel-ghq nil
   "ghq with counsel interface"
@@ -86,11 +87,16 @@
 (defun counsel-ghq--open-dired (file)
   (dired (file-name-directory file)))
 
+(defun counsel-ghq--open-magit (directory)
+  (magit-status directory))
+
 (ivy-set-actions 'counsel-ghq
   '(("o" find-file "Open File")
     ("O" find-file-other-window "Open File other window")
     ("f" find-file-other-frame "Open File other frame")
-    ("d" counsel-ghq--open-dired "Open Directory")))
+    ("d" counsel-ghq--open-dired "Open Directory")
+    ("m" counsel-ghq--open-magit "Open Maigt")
+))
 
 (defmacro counsel-ghq--line-string ()
   `(buffer-substring-no-properties
